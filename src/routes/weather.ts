@@ -1,12 +1,11 @@
 import { Router } from 'express';
+import { WeatherController } from '../controllers/weatherController';
 import { authenticate } from '../middleware/auth';
 
 const router = Router();
+const weatherController = new WeatherController();
 
-// Protected weather routes
-router.get('/current', authenticate, (req, res) => {
-  // TODO: Implement weather fetching
-  res.json({ message: 'Weather endpoint - to be implemented' });
-});
+router.get('/current', authenticate, (req, res) => weatherController.getCurrentWeather(req, res));
+router.get('/queries', authenticate, (req, res) => weatherController.getQueries(req, res));
 
 export const weatherRouter = router;

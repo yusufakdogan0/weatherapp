@@ -13,7 +13,9 @@ import { authRouter } from './routes/auth';
 config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT ? 
+  Number(process.env.PORT) : 
+  3000; // Default port if not set
 
 // Middleware
 app.use(helmet());
@@ -22,10 +24,19 @@ app.use(compression());
 app.use(express.json());
 
 // Rate limiting
+const rateLimitWindowMs = process.env.RATE_LIMIT_WINDOW_MS ? 
+  Number(process.env.RATE_LIMIT_WINDOW_MS) : 
+  15 * 60 * 1000; // Default: 15 minutes
+
+const rateLimitMaxRequests = process.env.RATE_LIMIT_MAX_REQUESTS ? 
+  Number(process.env.RATE_LIMIT_MAX_REQUESTS) : 
+  100; // Default: 100 requests
+
 const limiter = rateLimit({
-  windowMs: Number(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000,
-  max: Number(process.env.RATE_LIMIT_MAX_REQUESTS) || 100
+  windowMs: rateLimitWindowMs,
+  max: rateLimitMaxRequests
 });
+
 app.use(limiter);
 
 // Routes

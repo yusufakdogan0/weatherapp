@@ -6,7 +6,14 @@ import { LoginDto, CreateUserDto } from '../types/auth';
 const prisma = new PrismaClient();
 
 export class AuthService {
-  private readonly JWT_SECRET: Secret = process.env.JWT_SECRET || 'your-secret-key';
+  private readonly JWT_SECRET: Secret;
+
+  constructor() {
+    if (!process.env.JWT_SECRET) {
+      throw new Error('JWT_SECRET environment variable is not set');
+    }
+    this.JWT_SECRET = process.env.JWT_SECRET;
+  }
   private readonly JWT_EXPIRES_IN = '7d' as const;
 
   async createUser(createUserDto: CreateUserDto) {

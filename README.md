@@ -50,42 +50,6 @@ Start the development server:
 npm run dev
 ```
 
-## Build
-
-Compile the TypeScript code:
-```bash
-npm run build
-```
-
-## Production
-
-Start the production server:
-```bash
-npm start
-```
-
-## Testing
-
-Run the test suite:
-```bash
-npm test
-```
-
-## Project Structure
-
-```
-├── src/
-│   ├── index.ts          # Application entry point
-│   ├── routes/           # API routes
-│   ├── controllers/      # Route controllers
-│   ├── services/         # Business logic
-│   ├── middleware/       # Custom middleware
-│   ├── utils/            # Utility functions
-│   └── types/            # TypeScript type definitions
-├── prisma/
-│   └── schema.prisma    # Database schema
-└── tests/               # Test files
-```
 
 ## API Endpoints
 

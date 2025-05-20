@@ -1,12 +1,10 @@
-// This is your Prisma schema file
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
 
 generator client {
   provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -14,17 +12,24 @@ model User {
   email     String   @unique
   password  String
   name      String?
+  role      Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  searches  Search[]
+  queries   WeatherQuery[]
 }
 
-model Search {
+model WeatherQuery {
   id        String   @id @default(uuid())
   userId    String
   location  String
-  timestamp DateTime @default(now())
+  result    Json
+  createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
+}
+
+enum Role {
+  USER
+  ADMIN
 }

@@ -2,7 +2,6 @@
 
 A weather application built with TypeScript, Express, and PostgreSQL.
 
-
 ## Prerequisites
 
 - Node.js >= 18.0.0
@@ -25,6 +24,23 @@ A weather application built with TypeScript, Express, and PostgreSQL.
 5. Initialize the database:
    ```bash
    npx prisma migrate dev
+   ```
+
+6. Create the initial admin user:
+
+```bash
+npx ts-node scripts/
+create-admin.ts
+```
+This will create an admin user with:
+
+- Email: admin@gmail.com
+- Password: admin123
+- Role: ADMIN
+
+7. Start the application:
+   ```bash
+   npm start
    ```
 
 ## Development
@@ -74,8 +90,56 @@ npm test
 ## API Endpoints
 
 ### Authentication
-- POST /api/auth/login - User login
 
-## License
+#### Login
+- **POST** `/api/auth/login`
+- **Description:** Authenticate a user and receive a JWT token
+- **Body:**
+  ```json
+  {
+    "email": "user@example.com",
+    "password": "userpassword"
+  }
+  ```
 
-MIT
+
+- **Response (200):**
+```
+{
+  "user": {
+      "id": "user-uuid",
+      "email": "user@example.com",
+      "name": "User Name",
+      "role": "USER|ADMIN"
+  },
+  "token": "jwt.token.here"
+}
+```
+
+#### Create User (Admin Only)
+- **POST** /api/auth/users
+- **Description:** Create a new user (requires admin authentication)
+- **Headers:**
+  - Authorization: Bearer <admin_token>
+- **Body:**
+  ```
+  {
+    "email": "newuser@example.com",
+    "password": "userpassword",
+    "name": "New User",
+    "role": "USER"
+  }
+  ```
+- **Response (201):**
+  ```
+  {
+    "user": {
+        "id": "user-uuid",
+        "email": "newuser@example.com",
+        "name": "New User",
+        "role": "USER"
+    },
+    "token": "jwt.token.here"
+  }
+  ```
+

@@ -143,6 +143,8 @@ POST /api/auth/login
 }
 ```
 
+Then you should add that token in Authorization header as "Bearer: eyJhbGciOiJIUzI1NiIs..."
+
 ## Weather Endpoints
 
 ### Get Current Weather

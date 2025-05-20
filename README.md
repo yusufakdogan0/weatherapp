@@ -5,9 +5,8 @@ A weather application built with TypeScript, Express, and PostgreSQL.
 ## Prerequisites
 
 - Node.js >= 18.0.0
-- PostgreSQL
-- Redis
-
+- MySQL
+  
 ## Setup
 
 1. Clone the repository
